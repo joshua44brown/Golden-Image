@@ -1,0 +1,18 @@
+<%- include('partials/header') -%>
+  <div class="container"> 
+    <div class="row justify-content-center mt-5">
+      <h2 class="feed-title text-center">Image Feed</h2>
+      <ul class="row list-unstyled">
+        <% for(var i=0; i<posts.length; i++) {%>
+          <li class="col-4 justify-content-between mt-5 ">
+            <a href="/post/<%= posts[i]._id%>" class="text-center">
+              <div class="mx-auto">
+                <img class="img-fluid feed-post" src="<%= posts[i].image%>">
+              </div>
+            </a>
+          </li>
+        <% } %>
+        </ul>
+    </div>
+  </div>  
+<%- include('partials/footer') -%>

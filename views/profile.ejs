@@ -1,0 +1,106 @@
+<%- include('partials/header') -%>
+<div class="container">
+  <div class="row mt-5">
+      <div class="container">
+        <h2 class="feed-title text-center">My Images</h2>
+        <ul class="row list-unstyled">
+          <li class="col-4 gx-5 justify-content-between mt-5 position-relative"  data-bs-toggle="modal" data-bs-target="#post-modal">
+
+            <!--Want to intigrate this into nav bar but throws error-->
+            <!-- <h5><strong>Hello</strong>: <%= user.userName %></h5> -->
+            
+            <div style="height:100%; width:100%;background-color:lightgray">
+              <div class="position-absolute top-50 start-50 translate-middle" >
+                <div class="text-center" style="font-size:3em">+</div>
+                <div class="text-center">Add Post</div>
+              </div>
+            </div>
+          </li>
+        <% for(var i=0; i<posts.length; i++) {%>
+          <li class="col-4 gx-5 justify-content-between mt-5">
+            <a href="/post/<%= posts[i]._id%>">
+              <img class="img-fluid" src="<%= posts[i].image%>">
+            </a>
+          </li>
+        <% } %>
+        </ul>
+      </div> 
+      
+      <!-- Modal -->
+      <div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/post/createPost" enctype="multipart/form-data" method="POST">
+              <div class="modal-body">
+                  <div class="mb-3">
+                      <label for="title" class="form-label">Title</label>
+                      <input type="text" class="form-control" id="title" name="title" required/>
+                  </div>
+                  <div class="mb-3">
+                    <label for="caption" class="form-label">Caption</label>
+                    <textarea class="form-control" id="caption" name="caption" required></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="filmStock" class="form-label">Film Stock (Type "None" if not appplicable)</label>
+                    <input type="text" class="form-control" id="filmStock" name="filmStock" required>
+                </div>
+                <div class="container">
+    
+                  <div class="row">
+                    <div class="col">
+                      <label for="iso" class="form-label">ISO</label>
+                      <select class="form-control" id="iso" name="iso">
+                        <% for(var i=0; i<isoValues.length; i++) {%>
+                          <option value="<%= isoValues[i].value%>"><%= isoValues[i].label%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <label for="aperture" class="form-label">Aperture</label>
+                      <select class="form-control" id="aperture" name="aperture">
+                        <% for(var i=0; i<apertureValues.length; i++) {%>
+                          <option value="<%= apertureValues[i].value%>"><%= apertureValues[i].label%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <label for="shutterSpeed" class="form-label">Shutter Speed</label>
+                      <select class="form-control" id="shutterSpeed" name="shutterSpeed">
+                        <% for(var i=0; i<shutterSpeedValues.length; i++) {%>
+                          <option value="<%= shutterSpeedValues[i].value%>"><%= shutterSpeedValues[i].label%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                  </div>
+    
+    
+                </div>
+    
+                  <div class="mb-3">
+                    <label for="imgUpload" class="form-label">Image</label>
+                    <!--The image upload is not working on Chrome at this time-->
+                    <input type="file" class="form-control" id="imageUpload" name="file" required>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: black;">Close</button>
+                <button type="submit" class="btn btn-primary submit-btn" value="Upload" data-bs-target=".submit-btn" data-bs-toggle="d-none" style="background-color: rgb(253,197,53); border: none;">Submit</button>
+                <button type="button" class="btn btn-primary submit-btn d-none" value="Upload" disabled>
+                  <!--Show user request is loading and move into a nav bar-->
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Saving
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<%- include('partials/footer') -%>

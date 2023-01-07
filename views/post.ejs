@@ -1,0 +1,65 @@
+<%- include('partials/header') -%>
+<div class="container">
+  <div class="row mt-5 post-image">
+    <div class="col-6">
+      <img class="img-fluid post-image" src="<%= post.image%>" />
+    </div>
+    <div class="col-3 mt-5 justify-content-evenly post-image">
+      <h2><%= post.title %></h2>
+      <h6>Film Stock: <%= post.filmStock %></h6>
+      <h6>Aperture: <%= post.aperture %></h6>
+      <h6>ISO: <%= post.iso %></h6>
+      <h6>Shutter Speed: <%= post.shutterSpeed %></h6>
+      <p><%= post.caption %></p>
+      <div class="row justify-content-evenly">
+        <form
+          class="col-2"
+          action="/post/likePost/<%= post.id %>?_method=PUT"
+          method="POST"
+        >
+          <button class="btn btn-primary fa fa-heart" type="submit" style="background-color: #e3b203; border: none;"></button>
+        </form>
+        <h6 class="col-4">Likes: <%= post.likes %></h6>
+        <%if(post.user == user.id){ %>
+        <form
+          action="/post/deletePost/<%= post.id %>?_method=DELETE"
+          method="POST"
+          class="col-3"
+        >
+          <button class="btn btn-primary fa fa-trash" type="submit" style="background-color: #e3b203; border: none;"></button>
+        </form>
+        <%}%>
+      </div>
+    </div>
+    <div class="mt-5">
+
+      <h4>Add a comment</h4>
+      <form action="/comment/createComment/<%=post._id%>" method="POST">
+        <div class="mb-3">
+            <label for="comment" class="form-label">Comment</label>
+            <textarea class="form-control post-comment" id="comment" name="comment" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary main-buttons">Submit</button>
+      </form>
+    </div>
+    <ul>
+      <!--add: username and delete button-->
+      <% for(var i=0; i<comments.length; i++) {%>
+        <li class="col-6 justify-content-between mt-5">
+          <span><%= comments[i].createdBy%> said: "<%= comments[i].comment%>" on 
+          <strong class="comment-date"><%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(new Date()) %>
+          <!--If comment was created by current user, then show delete button-->
+          <br> <%if(comments[i].createdById == user.id){ %>
+                <form
+                  action="/comment/deleteComment/<%=post._id%>/<%= comments[i]._id %>?_method=DELETE"
+                  method="POST"
+                  >
+                  <button type="submit" class="btn btn-outline-danger">Delete</button>
+                </form>
+                <%}%>
+      <% } %>
+    </ul>
+  </div>
+</div>
+
+<%- include('partials/footer') -%>
