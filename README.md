@@ -42,6 +42,7 @@ bcrypt, connect-mongo, dotenv, ejs, express, express-flash, express-session, mon
 <img src="https://imgur.com/g11hZgE.jpeg" width=400 />
 <img src="https://imgur.com/D1X31ux.jpeg" width=400 />
 <img src="https://imgur.com/VWBJbCF.jpeg" width=400 />
+<img src="https://imgur.com/xbO9G7Z.jpeg" width=400 />
 
 ---
 
